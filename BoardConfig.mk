@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2017 The Android Open Source Project
+# Copyright (C) 2020 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 # *not* include it on all devices, so it is safe even with hardware-specific
 # components.
 
-#Device Path
+# Device Path
 DEVICE_PATH := device/asus/X01AD
 
 # Architecture
@@ -38,6 +38,10 @@ TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
+
+TARGET_CPU_ABI_LIST_64_BIT := $(TARGET_CPU_ABI)
+TARGET_CPU_ABI_LIST_32_BIT := $(TARGET_2ND_CPU_ABI),$(TARGET_2ND_CPU_ABI2)
+TARGET_CPU_ABI_LIST := $(TARGET_CPU_ABI_LIST_64_BIT),$(TARGET_CPU_ABI_LIST_32_BIT)
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := sdm632
@@ -54,6 +58,7 @@ BOARD_KERNEL_PAGESIZE    := 2048
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET     := 0x01000000
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 
 # Partitions
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -88,7 +93,7 @@ BOARD_BOOTIMG_HEADER_VERSION := 1
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET) --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 
-#Encryption
+# Encryption
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TARGET_HW_DISK_ENCRYPTION := true
@@ -96,10 +101,3 @@ TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
-
-#PB OFFICIAL
-PB_OFFICIAL := true
-
-#Misc
-ALLOW_MISSING_DEPENDENCIES := true
-
